@@ -18,7 +18,7 @@ export const Canvas = ({ width, height }: Props) => {
 
   return (
     <Stage options={OPTIONS}>
-      <Wheel x={width / 2} y={height / 2} radius={width / 2} />
+      <Wheel x={width / 2} y={height / 2} radius={width / 2 - width * 0.1} />
     </Stage>
   );
 };

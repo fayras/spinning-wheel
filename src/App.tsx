@@ -7,7 +7,7 @@ export const App = () => {
     <div>
       <Button onClick={() => spin()}>spin to win</Button>
       <Button onClick={() => addItem()}>add</Button>
-      <Canvas height={300} width={300} />
+      <Canvas height={600} width={600} />
     </div>
   );
 };
