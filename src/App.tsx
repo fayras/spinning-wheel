@@ -23,7 +23,6 @@ export const App = () => {
       <Box p="10" flex="1" maxW={500}>
         <Box mb="10">
           <Button onClick={() => spin()}>spin to win</Button>
-          <Button onClick={() => addItem("a")}>add</Button>
           <Button onClick={() => toggleColorMode()}>toggle dark mode</Button>
         </Box>
         <AddItem onAdd={(value) => addItem(value)} />
