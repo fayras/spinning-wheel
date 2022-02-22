@@ -1,46 +1,18 @@
 import { useState } from "react";
-import logo from "@assets/logo.svg";
-import "./App.css";
+import { Stage } from "react-pixi-fiber/index";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [count] = useState(0);
+  const OPTIONS = {
+    backgroundColor: 0x1099bb,
+    height: 100,
+    width: 100,
+  };
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button
-            type="button"
-            onClick={() => setCount((pCount) => pCount + 1)}
-          >
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.tsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {" | "}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
+    <div>
+      <div>test: {count}</div>
+      <Stage options={OPTIONS} />
     </div>
   );
 }
