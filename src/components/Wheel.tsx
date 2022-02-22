@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { Container, usePixiTicker } from "react-pixi-fiber/index";
 import { state } from "@/state/wheel";
 import { useSnapshot } from "valtio";
@@ -14,6 +14,9 @@ export const Wheel = ({ x, y, radius }: Props) => {
   const [rotation, setRotation] = useState(0);
   const mState = useSnapshot(state);
 
+  // Workaround dafür, dass React sonst die Items im Rad nicht aktualisiert.
+  useEffect(() => {}, [mState.items]);
+
   const animate = useCallback(
     (delta) => {
       state.rotationSpeed *= 0.98;
@@ -26,14 +29,22 @@ export const Wheel = ({ x, y, radius }: Props) => {
 
   return (
     <Container x={x} y={y} pivot={{ x, y }} rotation={rotation}>
-      <Arc
-        x={x}
-        y={y}
-        radius={radius}
-        startAngle={0}
-        endAngle={Math.PI / 2}
-        color={0xff0000}
-      />
+      {state.items.map((item, index) => {
+        const angle = (Math.PI * 2) / state.items.length;
+
+        return (
+          <Arc
+            key={item.id}
+            x={x}
+            y={y}
+            radius={radius}
+            startAngle={index * angle}
+            endAngle={index * angle + angle}
+            color={item.color}
+          />
+        );
+      })}
+      {/* <Text text={`count: ${state.items.length}`} x={200} y={200} /> */}
     </Container>
   );
 };
