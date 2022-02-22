@@ -22,16 +22,17 @@ export const ItemsList = () => {
   const items = [...mState.items].reverse();
 
   return (
-    <List mt="3" spacing={3}>
+    <List mt="3" spacing={2}>
       {items.map((item) => {
         const color = hex2string(item.color);
 
         return (
           <ListItem
+            boxShadow="sm"
             backgroundColor={bg}
             my="2"
             p="2"
-            borderWidth="1px"
+            borderWidth="0px"
             key={item.id}
             borderRadius="4"
           >

@@ -4,6 +4,7 @@ import {
   InputGroup,
   InputLeftElement,
   InputRightElement,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { useState } from "react";
 
@@ -18,11 +19,14 @@ export const AddItem = ({ onAdd }: Props) => {
     setInternalValue("");
   };
 
+  const bg = useColorModeValue("white", "gray.900");
+  const iconColor = useColorModeValue("gray.800", "gray.50");
+
   return (
     <InputGroup>
       <InputLeftElement
         pointerEvents="none"
-        color="gray.300"
+        color={iconColor}
         fontSize="1.5em"
         top="-1px"
       >
@@ -32,9 +36,9 @@ export const AddItem = ({ onAdd }: Props) => {
         pr="4.5rem"
         placeholder="Add Item..."
         border="none"
-        _focus={{
-          boxShadow: "none",
-        }}
+        backgroundColor={bg}
+        boxShadow="sm"
+        variant="outline"
         value={internalValue}
         onChange={(event) => setInternalValue(event.target.value)}
         onKeyPress={(e) => {
@@ -43,7 +47,7 @@ export const AddItem = ({ onAdd }: Props) => {
           }
         }}
       />
-      <InputRightElement>
+      <InputRightElement width="4.5rem">
         <Button
           h="1.75rem"
           size="sm"
