@@ -1,4 +1,5 @@
 import { proxy } from "valtio";
+import { getRandomColor, string2hex } from "@/utils/colors";
 
 type WheelItem = {
   id: number;
@@ -14,7 +15,7 @@ type State = {
 function createItem(label: string, color?: number): WheelItem {
   const id = new Date().valueOf() + Math.random();
 
-  return { id, label, color: color || Math.floor(Math.random() * 0xffffff) };
+  return { id, label, color: color || string2hex(getRandomColor()) };
 }
 
 export const state = proxy<State>({

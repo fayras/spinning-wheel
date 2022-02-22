@@ -1,6 +1,5 @@
 import { useSnapshot } from "valtio";
 import {
-  Button,
   List,
   ListItem,
   IconButton,
@@ -12,6 +11,9 @@ import {
 import { CloseIcon } from "@chakra-ui/icons";
 import { state, removeItem } from "@/state/wheel";
 
+import { hex2string, string2hex } from "@/utils/colors";
+import { ColorPicker } from "./ColorPicker";
+
 export const ItemsList = () => {
   const mState = useSnapshot(state);
   const bg = useColorModeValue("white", "gray.900");
@@ -20,7 +22,7 @@ export const ItemsList = () => {
   return (
     <List mt="3" spacing={3}>
       {mState.items.map((item) => {
-        const color = `#${item.color.toString(16).slice(0, 6)}`;
+        const color = hex2string(item.color);
 
         return (
           <ListItem
@@ -33,13 +35,17 @@ export const ItemsList = () => {
           >
             <Flex>
               <Box>
-                <Button
-                  size="xs"
-                  bgColor={color}
-                  borderRadius="full"
-                  _hover={{ bg: color }}
-                  _active={{ bg: color }}
-                  mr="2"
+                <ColorPicker
+                  color={color}
+                  onSelect={(c) => {
+                    const index = state.items.findIndex(
+                      (i) => i.id === item.id
+                    );
+
+                    // eslint-disable-next-line no-bitwise
+                    const cAsNum = string2hex(c);
+                    state.items[index].color = cAsNum;
+                  }}
                 />
               </Box>
               <Box>{item.label}</Box>
