@@ -11,7 +11,7 @@ import { ItemsList } from "./components/ItemsList";
 import { spin, addItem } from "./state/wheel";
 
 export const App = () => {
-  const { colorMode, toggleColorMode } = useColorMode();
+  const { toggleColorMode } = useColorMode();
   const bg = useColorModeValue("gray.50", "gray.800");
 
   return (
@@ -23,7 +23,7 @@ export const App = () => {
         <Button onClick={() => spin()}>spin to win</Button>
         <Button onClick={() => addItem()}>add</Button>
 
-        <Button onClick={() => toggleColorMode()}>dark mode</Button>
+        <Button onClick={() => toggleColorMode()}>toggle dark mode</Button>
         <ItemsList />
       </Box>
     </Flex>
