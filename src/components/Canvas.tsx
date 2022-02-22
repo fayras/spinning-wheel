@@ -9,8 +9,7 @@ type Props = {
 
 export const Canvas = ({ width, height }: Props) => {
   const OPTIONS: IApplicationOptions = {
-    backgroundColor: 0x1099bb,
-    backgroundAlpha: 0.3,
+    backgroundAlpha: 0,
     antialias: true,
     height,
     width,

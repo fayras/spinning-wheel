@@ -29,3 +29,11 @@ export const spin = () => {
 export const addItem = () => {
   state.items.push(createItem("a"));
 };
+
+export const removeItem = (id: number) => {
+  const index = state.items.findIndex((item) => item.id === id);
+
+  if (index) {
+    state.items.splice(index, 1);
+  }
+};
