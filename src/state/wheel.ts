@@ -27,8 +27,8 @@ export const spin = () => {
   state.rotationSpeed = 3;
 };
 
-export const addItem = () => {
-  state.items.push(createItem("a"));
+export const addItem = (label: string) => {
+  state.items.push(createItem(label));
 };
 
 export const removeItem = (id: number) => {
