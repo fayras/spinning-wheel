@@ -1,5 +1,7 @@
 import { useState, useCallback } from "react";
 import { Container, usePixiTicker } from "react-pixi-fiber/index";
+import { state } from "@/state/wheel";
+import { useSnapshot } from "valtio";
 import { Arc } from "./Arc";
 
 type Props = {
@@ -10,19 +12,14 @@ type Props = {
 
 export const Wheel = ({ x, y, radius }: Props) => {
   const [rotation, setRotation] = useState(0);
-  const [rotationSpeed, setRotationSpeed] = useState(3);
+  const mState = useSnapshot(state);
 
   const animate = useCallback(
     (delta) => {
-      // just for fun, let's rotate mr rabbit a little
-      // delta is 1 if running at 100% performance
-      // creates frame-independent tranformation
-      setRotation((r) => {
-        setRotationSpeed((s) => s * 0.98);
-        return r + rotationSpeed * delta;
-      });
+      state.rotationSpeed *= 0.98;
+      setRotation((r) => r + mState.rotationSpeed * delta);
     },
-    [rotationSpeed]
+    [mState.rotationSpeed]
   );
 
   usePixiTicker(animate);
