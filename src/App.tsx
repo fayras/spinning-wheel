@@ -1,20 +1,13 @@
 import { useState } from "react";
-import { Stage } from "react-pixi-fiber/index";
+import { Canvas } from "./components/Canvas";
 
-function App() {
+export const App = () => {
   const [count] = useState(0);
-  const OPTIONS = {
-    backgroundColor: 0x1099bb,
-    height: 100,
-    width: 100,
-  };
 
   return (
     <div>
       <div>test: {count}</div>
-      <Stage options={OPTIONS} />
+      <Canvas height={100} width={100} />
     </div>
   );
-}
-
-export default App;
+};
