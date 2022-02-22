@@ -19,9 +19,11 @@ export const ItemsList = () => {
   const bg = useColorModeValue("white", "gray.900");
   const iconColor = useColorModeValue("blackAlpha", "gray");
 
+  const items = [...mState.items].reverse();
+
   return (
     <List mt="3" spacing={3}>
-      {mState.items.map((item) => {
+      {items.map((item) => {
         const color = hex2string(item.color);
 
         return (
