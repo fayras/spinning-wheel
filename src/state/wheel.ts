@@ -14,7 +14,7 @@ type State = {
 function createItem(label: string, color?: number): WheelItem {
   const id = new Date().valueOf() + Math.random();
 
-  return { id, label, color: color || Math.random() * 0xffffff };
+  return { id, label, color: color || Math.floor(Math.random() * 0xffffff) };
 }
 
 export const state = proxy<State>({
