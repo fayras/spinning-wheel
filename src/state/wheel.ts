@@ -34,7 +34,7 @@ export const addItem = () => {
 export const removeItem = (id: number) => {
   const index = state.items.findIndex((item) => item.id === id);
 
-  if (index) {
+  if (index > -1) {
     state.items.splice(index, 1);
   }
 };
