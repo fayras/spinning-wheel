@@ -32,5 +32,12 @@
     "browser": true,
     "node": true
   },
-  "ignorePatterns": "*.config.ts"
+  "ignorePatterns": [
+    "*.config.ts",
+    "node_modules",
+    ".DS_Store",
+    "dist",
+    "dist-ssr",
+    "*.local",
+    "node_modules/*"]
 }
