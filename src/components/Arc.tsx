@@ -34,6 +34,8 @@ type Props = {
   onMouseLeave?: () => void;
 };
 
+const QUARTER_CIRCLE = Math.PI / 2;
+
 export const behavior: CustomPIXIComponentBehavior<Graphics, Props> = {
   customDisplayObject() {
     const g = new Graphics();
@@ -50,7 +52,13 @@ export const behavior: CustomPIXIComponentBehavior<Graphics, Props> = {
     const { x, y, radius, startAngle, endAngle, color, crossHatch } = newProps;
     instance.clear();
     instance.beginFill(color);
-    instance.arc(x, y, radius, startAngle, endAngle);
+    instance.arc(
+      x,
+      y,
+      radius,
+      startAngle - QUARTER_CIRCLE,
+      endAngle - QUARTER_CIRCLE
+    );
     instance.lineTo(x, y);
     instance.endFill();
 
