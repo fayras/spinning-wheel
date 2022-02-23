@@ -1,5 +1,7 @@
+/* eslint-disable no-param-reassign */
 import { CustomPIXIComponent } from "react-pixi-fiber/index";
 import { Graphics } from "pixi.js";
+import { CrossHatchFilter } from "@/utils/filters";
 
 type Props = {
   x: number;
@@ -8,6 +10,7 @@ type Props = {
   startAngle: number;
   endAngle: number;
   color: number;
+  crossHatch: boolean;
   onClick?: () => void;
 };
 
@@ -18,17 +21,24 @@ export const behavior = {
 
     return g;
   },
+
   customApplyProps(
     instance: Graphics,
     oldProps: Props | undefined,
     newProps: Props
   ) {
-    const { x, y, radius, startAngle, endAngle, color } = newProps;
+    const { x, y, radius, startAngle, endAngle, color, crossHatch } = newProps;
     instance.clear();
     instance.beginFill(color);
     instance.arc(x, y, radius, startAngle, endAngle);
     instance.lineTo(x, y);
     instance.endFill();
+
+    if (crossHatch) {
+      instance.filters = [new CrossHatchFilter()];
+    } else {
+      instance.filters = [];
+    }
 
     if (oldProps?.onClick) {
       instance.off("click", oldProps.onClick);

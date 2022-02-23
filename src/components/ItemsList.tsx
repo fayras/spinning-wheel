@@ -21,6 +21,7 @@ export const ItemsList = () => {
   const [hoveredItem, setHovered] = useState<number>();
 
   const bg = useColorModeValue("white", "gray.900");
+  const activeBg = useColorModeValue("gray.100", "gray.700");
   const iconColor = useColorModeValue("blackAlpha", "gray");
 
   const items = [...mState.items].reverse();
@@ -33,14 +34,21 @@ export const ItemsList = () => {
         return (
           <ListItem
             boxShadow="sm"
-            backgroundColor={bg}
+            backgroundColor={state.activeItem === item.id ? activeBg : bg}
+            transition="background-color 80ms linear;"
             my="2"
             p="2"
             borderWidth="0px"
             key={item.id}
             borderRadius="4"
-            onMouseOver={() => setHovered(item.id)}
-            onMouseLeave={() => setHovered(undefined)}
+            onMouseOver={() => {
+              setHovered(item.id);
+              state.activeItem = item.id;
+            }}
+            onMouseLeave={() => {
+              setHovered(undefined);
+              state.activeItem = null;
+            }}
           >
             <Flex>
               <Box>

@@ -10,6 +10,7 @@ type WheelItem = {
 type State = {
   rotationSpeed: number;
   items: WheelItem[];
+  activeItem: number | null;
 };
 
 function createItem(label: string, color?: number): WheelItem {
@@ -21,6 +22,7 @@ function createItem(label: string, color?: number): WheelItem {
 export const state = proxy<State>({
   rotationSpeed: 0,
   items: ["a", "b", "c"].map((i) => createItem(i)),
+  activeItem: null,
 });
 
 export const spin = () => {

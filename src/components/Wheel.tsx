@@ -41,6 +41,7 @@ export const Wheel = ({ x, y, radius }: Props) => {
             startAngle={index * angle}
             endAngle={index * angle + angle}
             color={item.color}
+            crossHatch={mState.activeItem === item.id}
           />
         );
       })}
