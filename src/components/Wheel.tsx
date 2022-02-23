@@ -20,12 +20,17 @@ export const Wheel = ({ x, y, radius }: Props) => {
   const [rotation, setRotation] = useState(0.05);
   const mState = useSnapshot(state);
 
-  useEffect(() => {
-    const angle = (Math.PI * 2) / mState.items.length;
-    const index = mod(Math.floor(-rotation / angle), mState.items.length);
+  const items = useMemo(
+    () => mState.items.filter((item) => item.visible),
+    [mState.items]
+  );
 
-    state.activeItem = mState.items[index].id;
-  }, [rotation, mState.items]);
+  useEffect(() => {
+    const angle = (Math.PI * 2) / items.length;
+    const index = mod(Math.floor(-rotation / angle), items.length);
+
+    state.activeItem = items[index].id;
+  }, [rotation, items]);
 
   useEffect(() => {
     void sound.play("clack");
@@ -44,11 +49,6 @@ export const Wheel = ({ x, y, radius }: Props) => {
   );
 
   usePixiTicker(animate);
-
-  const items = useMemo(
-    () => mState.items.filter((item) => item.visible),
-    [mState.items]
-  );
 
   return (
     <Container x={x} y={y} pivot={{ x, y }} rotation={rotation}>
