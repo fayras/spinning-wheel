@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useSnapshot } from "valtio";
 import {
   List,
@@ -8,7 +7,6 @@ import {
   Spacer,
   Box,
   Flex,
-  Fade,
   useColorModeValue,
   Input,
 } from "@chakra-ui/react";
@@ -23,10 +21,9 @@ const MotionListItem = motion<ListItemProps>(ListItem);
 
 export const ItemsList = () => {
   const mState = useSnapshot(state);
-  const [hoveredItem, setHovered] = useState<number>();
 
   const bg = useColorModeValue("white", "gray.900");
-  const activeBg = useColorModeValue("gray.100", "gray.700");
+  // const activeBg = useColorModeValue("gray.100", "gray.700");
   const iconColor = useColorModeValue("blackAlpha", "gray");
 
   const items = [...mState.items].reverse();
