@@ -34,7 +34,7 @@ export const ItemsList = () => {
         return (
           <ListItem
             boxShadow="sm"
-            backgroundColor={state.activeItem === item.id ? activeBg : bg}
+            backgroundColor={mState.activeItem === item.id ? activeBg : bg}
             transition="background-color 80ms linear;"
             my="2"
             p="2"

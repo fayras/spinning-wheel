@@ -42,6 +42,12 @@ export const Wheel = ({ x, y, radius }: Props) => {
             endAngle={index * angle + angle}
             color={item.color}
             crossHatch={mState.activeItem === item.id}
+            onMouseOver={() => {
+              state.activeItem = item.id;
+            }}
+            onMouseLeave={() => {
+              state.activeItem = null;
+            }}
           />
         );
       })}

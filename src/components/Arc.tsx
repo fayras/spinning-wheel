@@ -1,7 +1,25 @@
 /* eslint-disable no-param-reassign */
-import { CustomPIXIComponent } from "react-pixi-fiber/index";
+import {
+  CustomPIXIComponent,
+  type CustomPIXIComponentBehavior,
+} from "react-pixi-fiber/index";
 import { Graphics } from "pixi.js";
 import { CrossHatchFilter } from "@/utils/filters";
+
+function callback(
+  instance: Graphics,
+  event: string,
+  newValue?: () => void,
+  oldValue?: () => void
+) {
+  if (oldValue) {
+    instance.off(event, oldValue);
+  }
+
+  if (newValue) {
+    instance.on(event, newValue);
+  }
+}
 
 type Props = {
   x: number;
@@ -12,10 +30,12 @@ type Props = {
   color: number;
   crossHatch: boolean;
   onClick?: () => void;
+  onMouseOver?: () => void;
+  onMouseLeave?: () => void;
 };
 
-export const behavior = {
-  customDisplayObject: () => {
+export const behavior: CustomPIXIComponentBehavior<Graphics, Props> = {
+  customDisplayObject() {
     const g = new Graphics();
     g.interactive = true;
 
@@ -40,13 +60,19 @@ export const behavior = {
       instance.filters = [];
     }
 
-    if (oldProps?.onClick) {
-      instance.off("click", oldProps.onClick);
-    }
-
-    if (newProps.onClick) {
-      instance.on("click", newProps.onClick);
-    }
+    callback(instance, "click", newProps.onClick, oldProps?.onClick);
+    callback(
+      instance,
+      "mouseover",
+      newProps.onMouseOver,
+      oldProps?.onMouseOver
+    );
+    callback(
+      instance,
+      "mouseout",
+      newProps.onMouseLeave,
+      oldProps?.onMouseLeave
+    );
   },
 };
 
