@@ -8,6 +8,7 @@ import {
   PopoverTrigger,
   useBoolean,
   Box,
+  Portal,
 } from "@chakra-ui/react";
 import { availableColors } from "@/utils/colors";
 
@@ -26,7 +27,7 @@ export const ColorPicker = ({ color, onSelect }: Props) => {
       onClose={setIsEditing.off}
       placement="left"
       isLazy
-      lazyBehavior="keepMounted"
+      lazyBehavior="unmount"
     >
       <PopoverTrigger>
         <Button
@@ -38,25 +39,34 @@ export const ColorPicker = ({ color, onSelect }: Props) => {
           mr="2"
         />
       </PopoverTrigger>
-      <PopoverContent width="auto">
-        <PopoverArrow />
-        <PopoverBody height={200} overflowY="scroll">
-          <SimpleGrid columns={5} spacing={2} templateColumns="repeat(5, 24px)">
-            {availableColors.map((c) => {
-              return (
-                <Box
-                  key={c}
-                  bg={c}
-                  w="6"
-                  h="6"
-                  cursor="pointer"
-                  onClick={() => onSelect(c)}
-                />
-              );
-            })}
-          </SimpleGrid>
-        </PopoverBody>
-      </PopoverContent>
+      <Portal>
+        <PopoverContent width="auto">
+          <PopoverArrow />
+          <PopoverBody height={200} overflowY="scroll">
+            <SimpleGrid
+              columns={5}
+              spacing={2}
+              templateColumns="repeat(5, 24px)"
+            >
+              {availableColors.map((c) => {
+                return (
+                  <Box
+                    key={c}
+                    bg={c}
+                    w="6"
+                    h="6"
+                    cursor="pointer"
+                    onClick={() => {
+                      onSelect(c);
+                      setIsEditing.off();
+                    }}
+                  />
+                );
+              })}
+            </SimpleGrid>
+          </PopoverBody>
+        </PopoverContent>
+      </Portal>
     </Popover>
   );
 };
