@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useSnapshot } from "valtio";
 import {
   List,
@@ -6,6 +7,7 @@ import {
   Spacer,
   Box,
   Flex,
+  Fade,
   useColorModeValue,
 } from "@chakra-ui/react";
 import { CloseIcon } from "@chakra-ui/icons";
@@ -16,6 +18,8 @@ import { ColorPicker } from "./ColorPicker";
 
 export const ItemsList = () => {
   const mState = useSnapshot(state);
+  const [hoveredItem, setHovered] = useState<number>();
+
   const bg = useColorModeValue("white", "gray.900");
   const iconColor = useColorModeValue("blackAlpha", "gray");
 
@@ -35,6 +39,8 @@ export const ItemsList = () => {
             borderWidth="0px"
             key={item.id}
             borderRadius="4"
+            onMouseOver={() => setHovered(item.id)}
+            onMouseLeave={() => setHovered(undefined)}
           >
             <Flex>
               <Box>
@@ -54,16 +60,18 @@ export const ItemsList = () => {
               <Box>{item.label}</Box>
               <Spacer />
               <Box>
-                <IconButton
-                  aria-label="Remove Item"
-                  onClick={() => {
-                    removeItem(item.id);
-                  }}
-                  variant="ghost"
-                  colorScheme={iconColor}
-                  size="xs"
-                  icon={<CloseIcon />}
-                />
+                <Fade in={hoveredItem === item.id}>
+                  <IconButton
+                    aria-label="Remove Item"
+                    onClick={() => {
+                      removeItem(item.id);
+                    }}
+                    variant="ghost"
+                    colorScheme={iconColor}
+                    size="xs"
+                    icon={<CloseIcon />}
+                  />
+                </Fade>
               </Box>
             </Flex>
           </ListItem>
