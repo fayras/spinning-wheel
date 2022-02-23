@@ -1,7 +1,9 @@
 import { useState, useCallback, useEffect } from "react";
 import { Container, usePixiTicker } from "react-pixi-fiber/index";
+import { sound } from "@pixi/sound";
 import { state } from "@/state/wheel";
 import { useSnapshot } from "valtio";
+import clack from "@assets/clack.ogg";
 import { Arc } from "./Arc";
 
 type Props = {
@@ -10,12 +12,16 @@ type Props = {
   radius: number;
 };
 
+sound.add("clack", clack);
+
 export const Wheel = ({ x, y, radius }: Props) => {
   const [rotation, setRotation] = useState(0);
   const mState = useSnapshot(state);
 
   // Workaround dafür, dass React sonst die Items im Rad nicht aktualisiert.
-  useEffect(() => {}, [mState.items]);
+  useEffect(() => {
+    void sound.play("clack");
+  }, [mState.items]);
 
   const animate = useCallback(
     (delta) => {

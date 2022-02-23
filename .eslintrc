@@ -42,7 +42,8 @@
   ],
   "rules": {
     "import/prefer-default-export": "off",
-    "react/function-component-definition": [2, { "namedComponents": "arrow-function" }]
+    "react/function-component-definition": [2, { "namedComponents": "arrow-function" }],
+    "no-void": ["error", { "allowAsStatement": true }]
   },
   "ignorePatterns": [
     "*.config.ts",
