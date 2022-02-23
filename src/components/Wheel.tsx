@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useMemo } from "react";
 import { Container, usePixiTicker } from "react-pixi-fiber/index";
 import { sound } from "@pixi/sound";
 import { state } from "@/state/wheel";
@@ -45,10 +45,15 @@ export const Wheel = ({ x, y, radius }: Props) => {
 
   usePixiTicker(animate);
 
+  const items = useMemo(
+    () => mState.items.filter((item) => item.visible),
+    [mState.items]
+  );
+
   return (
     <Container x={x} y={y} pivot={{ x, y }} rotation={rotation}>
-      {mState.items.map((item, index) => {
-        const angle = (Math.PI * 2) / mState.items.length;
+      {items.map((item, index) => {
+        const angle = (Math.PI * 2) / items.length;
 
         return (
           <Arc

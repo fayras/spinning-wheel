@@ -12,9 +12,10 @@ import {
 } from "@chakra-ui/react";
 import { motion, AnimatePresence } from "framer-motion";
 import { CloseIcon, ViewOffIcon } from "@chakra-ui/icons";
-import { state, removeItem } from "@/state/wheel";
+import { state, removeItem, editItem } from "@/state/wheel";
 
 import { hex2string, string2hex } from "@/utils/colors";
+import { useMemo } from "react";
 import { ColorPicker } from "./ColorPicker";
 
 const MotionListItem = motion<ListItemProps>(ListItem);
@@ -26,7 +27,7 @@ export const ItemsList = () => {
   // const activeBg = useColorModeValue("gray.100", "gray.700");
   const iconColor = useColorModeValue("blackAlpha", "gray");
 
-  const items = [...mState.items].reverse();
+  const items = useMemo(() => [...mState.items].reverse(), [mState.items]);
 
   return (
     <List mt="3" spacing={2}>
@@ -77,6 +78,7 @@ export const ItemsList = () => {
                 <Box>
                   <Input
                     variant="unstyled"
+                    textDecoration={item.visible ? "none" : "line-through"}
                     value={item.label}
                     onChange={(event) => {
                       const index = state.items.findIndex(
@@ -94,7 +96,7 @@ export const ItemsList = () => {
                     mr="0.5"
                     aria-label="Edit Item"
                     onClick={() => {
-                      removeItem(item.id);
+                      editItem(item.id, { visible: !item.visible });
                     }}
                     variant="ghost"
                     colorScheme={iconColor}

@@ -5,6 +5,7 @@ type WheelItem = {
   id: number;
   label: string;
   color: number;
+  visible: boolean;
 };
 
 type State = {
@@ -16,7 +17,12 @@ type State = {
 function createItem(label: string, color?: number): WheelItem {
   const id = new Date().valueOf() + Math.random();
 
-  return { id, label, color: color || string2hex(getRandomColor()) };
+  return {
+    id,
+    label,
+    visible: true,
+    color: color || string2hex(getRandomColor()),
+  };
 }
 
 export const state = proxy<State>({
@@ -31,6 +37,20 @@ export const spin = () => {
 
 export const addItem = (label: string) => {
   state.items.push(createItem(label));
+};
+
+export const editItem = (
+  id: number,
+  values: Partial<Omit<WheelItem, "id">>
+) => {
+  const index = state.items.findIndex((item) => item.id === id);
+
+  if (index > -1) {
+    if (values.color !== undefined) state.items[index].color = values.color;
+    if (values.label !== undefined) state.items[index].label = values.label;
+    if (values.visible !== undefined)
+      state.items[index].visible = values.visible;
+  }
 };
 
 export const removeItem = (id: number) => {
