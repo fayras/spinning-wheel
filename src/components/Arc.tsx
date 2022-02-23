@@ -28,7 +28,7 @@ type Props = {
   startAngle: number;
   endAngle: number;
   color: number;
-  crossHatch: boolean;
+  crossHatch?: boolean;
   onClick?: () => void;
   onMouseOver?: () => void;
   onMouseLeave?: () => void;
