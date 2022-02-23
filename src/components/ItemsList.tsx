@@ -10,6 +10,7 @@ import {
   Flex,
   Fade,
   useColorModeValue,
+  Input,
 } from "@chakra-ui/react";
 import { motion, AnimatePresence } from "framer-motion";
 import { CloseIcon } from "@chakra-ui/icons";
@@ -73,7 +74,19 @@ export const ItemsList = () => {
                     }}
                   />
                 </Box>
-                <Box>{item.label}</Box>
+                <Box>
+                  <Input
+                    variant="unstyled"
+                    value={item.label}
+                    onChange={(event) => {
+                      const index = state.items.findIndex(
+                        (i) => i.id === item.id
+                      );
+
+                      state.items[index].label = event.target.value;
+                    }}
+                  />
+                </Box>
                 <Spacer />
                 <Box>
                   {/* <Fade in={hoveredItem === item.id}> */}
