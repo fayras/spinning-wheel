@@ -20,6 +20,9 @@ export const Wheel = ({ x, y, radius }: Props) => {
   const animate = useCallback(
     (delta) => {
       state.rotationSpeed *= 0.98;
+      if (state.rotationSpeed < 0.001) {
+        state.rotationSpeed = 0;
+      }
       setRotation((r) => r + mState.rotationSpeed * delta);
     },
     [mState.rotationSpeed]
