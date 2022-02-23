@@ -13,7 +13,7 @@ import {
   Input,
 } from "@chakra-ui/react";
 import { motion, AnimatePresence } from "framer-motion";
-import { CloseIcon } from "@chakra-ui/icons";
+import { CloseIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { state, removeItem } from "@/state/wheel";
 
 import { hex2string, string2hex } from "@/utils/colors";
@@ -93,6 +93,17 @@ export const ItemsList = () => {
                 <Spacer />
                 <Box>
                   {/* <Fade in={hoveredItem === item.id}> */}
+                  <IconButton
+                    mr="0.5"
+                    aria-label="Edit Item"
+                    onClick={() => {
+                      removeItem(item.id);
+                    }}
+                    variant="ghost"
+                    colorScheme={iconColor}
+                    size="xs"
+                    icon={<ViewOffIcon />}
+                  />
                   <IconButton
                     aria-label="Remove Item"
                     onClick={() => {
