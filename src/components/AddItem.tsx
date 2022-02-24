@@ -7,15 +7,12 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { useState } from "react";
+import { addItem } from "../state/wheel";
 
-type Props = {
-  onAdd: (value: string) => void;
-};
-
-export const AddItem = ({ onAdd }: Props) => {
+export const AddItem = () => {
   const [internalValue, setInternalValue] = useState("");
   const handleAdd = () => {
-    onAdd(internalValue);
+    addItem(internalValue);
     setInternalValue("");
   };
 
