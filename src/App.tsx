@@ -17,12 +17,23 @@ export const App = () => {
 
   return (
     <Flex backgroundColor={bg} minHeight="100vh">
-      <Center>
+      <Center flexDirection="column">
+        <Button
+          size="lg"
+          width="60"
+          borderRadius="3xl"
+          bgGradient="linear(to-b, teal.500, green.500)"
+          _hover={{
+            bgGradient: "linear(to-b, red.500, yellow.500)",
+          }}
+          onClick={() => spin()}
+        >
+          SPIN
+        </Button>
         <Canvas height={600} width={600} />
       </Center>
       <Box p="10" flex="1" maxW={500}>
         <Box mb="10">
-          <Button onClick={() => spin()}>spin to win</Button>
           <Button onClick={() => toggleColorMode()}>toggle dark mode</Button>
         </Box>
         <AddItem onAdd={(value) => addItem(value)} />
