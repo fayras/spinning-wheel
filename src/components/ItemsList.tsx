@@ -12,7 +12,7 @@ import {
 } from "@chakra-ui/react";
 import { motion, AnimatePresence } from "framer-motion";
 import { CloseIcon, ViewOffIcon } from "@chakra-ui/icons";
-import { state, removeItem, editItem } from "@/state/wheel";
+import { state, removeItem, editItem } from "@/state/lists";
 
 import { hex2string, string2hex } from "@/utils/colors";
 import { useMemo } from "react";
@@ -27,7 +27,10 @@ export const ItemsList = () => {
   // const activeBg = useColorModeValue("gray.100", "gray.700");
   const iconColor = useColorModeValue("blackAlpha", "gray");
 
-  const items = useMemo(() => [...mState.items].reverse(), [mState.items]);
+  const items = useMemo(
+    () => [...mState.currentItems].reverse(),
+    [mState.currentItems]
+  );
 
   return (
     <List mt="3" spacing={2}>
@@ -66,12 +69,8 @@ export const ItemsList = () => {
                   <ColorPicker
                     color={color}
                     onSelect={(c) => {
-                      const index = state.items.findIndex(
-                        (i) => i.id === item.id
-                      );
-
                       const cAsNum = string2hex(c);
-                      state.items[index].color = cAsNum;
+                      editItem(item.id, { color: cAsNum });
                     }}
                   />
                 </Box>
@@ -81,11 +80,7 @@ export const ItemsList = () => {
                     textDecoration={item.visible ? "none" : "line-through"}
                     value={item.label}
                     onChange={(event) => {
-                      const index = state.items.findIndex(
-                        (i) => i.id === item.id
-                      );
-
-                      state.items[index].label = event.target.value;
+                      editItem(item.id, { label: event.target.value });
                     }}
                   />
                 </Box>

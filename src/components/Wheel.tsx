@@ -1,7 +1,8 @@
 import { useState, useCallback, useEffect, useMemo } from "react";
 import { Container, usePixiTicker } from "react-pixi-fiber/index";
 import { sound } from "@pixi/sound";
-import { state } from "@/state/wheel";
+import { state as stateWheel } from "@/state/wheel";
+import { state as stateLists } from "@/state/lists";
 import { useSnapshot } from "valtio";
 import clack from "@assets/clack.ogg";
 import { Arc } from "./Arc";
@@ -18,34 +19,35 @@ const mod = (m: number, n: number) => ((m % n) + n) % n;
 
 export const Wheel = ({ x, y, radius }: Props) => {
   const [rotation, setRotation] = useState(0.05);
-  const mState = useSnapshot(state);
+  const mStateWheel = useSnapshot(stateWheel);
+  const mStateLists = useSnapshot(stateLists);
 
   const items = useMemo(
-    () => mState.items.filter((item) => item.visible),
-    [mState.items]
+    () => mStateLists.currentItems.filter((item) => item.visible),
+    [mStateLists.currentItems]
   );
 
   useEffect(() => {
     const angle = (Math.PI * 2) / items.length;
     const index = mod(Math.floor(-rotation / angle), items.length);
 
-    state.activeItem = items[index].id;
+    stateWheel.activeItem = items[index]?.id || null;
   }, [rotation, items]);
 
   useEffect(() => {
     void sound.play("clack");
-  }, [mState.activeItem]);
+  }, [mStateWheel.activeItem]);
 
   const animate = useCallback(
     (delta) => {
-      state.rotationSpeed *= 0.98;
-      if (state.rotationSpeed < 0.001) {
-        state.rotationSpeed = 0;
+      stateWheel.rotationSpeed *= 0.98;
+      if (mStateWheel.rotationSpeed < 0.001) {
+        stateWheel.rotationSpeed = 0;
       }
 
-      setRotation((r) => r + mState.rotationSpeed * delta);
+      setRotation((r) => r + mStateWheel.rotationSpeed * delta);
     },
-    [mState.rotationSpeed]
+    [mStateWheel.rotationSpeed]
   );
 
   usePixiTicker(animate);
@@ -65,12 +67,12 @@ export const Wheel = ({ x, y, radius }: Props) => {
             endAngle={index * angle + angle}
             color={item.color}
             // crossHatch={mState.activeItem === item.id}
-            onMouseOver={() => {
-              state.activeItem = item.id;
-            }}
-            onMouseLeave={() => {
-              state.activeItem = null;
-            }}
+            // onMouseOver={() => {
+            //   stateWheel.activeItem = item.id;
+            // }}
+            // onMouseLeave={() => {
+            //   stateWheel.activeItem = null;
+            // }}
           />
         );
       })}

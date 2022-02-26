@@ -7,15 +7,12 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { useState } from "react";
+import { addItem } from "../state/lists";
 
-type Props = {
-  onAdd: (value: string) => void;
-};
-
-export const AddItem = ({ onAdd }: Props) => {
+export const AddItem = () => {
   const [internalValue, setInternalValue] = useState("");
   const handleAdd = () => {
-    onAdd(internalValue);
+    addItem(internalValue);
     setInternalValue("");
   };
 
@@ -23,7 +20,7 @@ export const AddItem = ({ onAdd }: Props) => {
   const iconColor = useColorModeValue("gray.800", "gray.50");
 
   return (
-    <InputGroup>
+    <InputGroup zIndex="0">
       <InputLeftElement
         pointerEvents="none"
         color={iconColor}
