@@ -1,4 +1,4 @@
-import { proxy } from "valtio";
+import { proxy, subscribe } from "valtio";
 import { derive } from "valtio/utils";
 import { getRandomColor, string2hex } from "@/utils/colors";
 
@@ -23,12 +23,13 @@ type State = {
   all: List[];
 };
 
-const internal = proxy<State>({
-  currentID: 123,
-  all: [
-    { id: 123, label: "Test", items: [] },
-    { id: 124, label: "Test 2", items: [] },
-  ],
+const initialState =
+  localStorage.getItem("lists") || `{ "currentID": null, "all": [] }`;
+
+const internal = proxy<State>(JSON.parse(initialState) as State);
+
+subscribe(internal, () => {
+  localStorage.setItem("lists", JSON.stringify(internal));
 });
 
 export const state = derive({
