@@ -9,6 +9,7 @@ import {
 import { AddItem } from "./components/AddItem";
 import { Canvas } from "./components/Canvas";
 import { ItemsList } from "./components/ItemsList";
+import { ListSelect } from "./components/ListSelect";
 import { SpinButton } from "./components/SpinButton";
 
 export const App = () => {
@@ -25,6 +26,7 @@ export const App = () => {
         <Box mb="10">
           <Button onClick={() => toggleColorMode()}>toggle dark mode</Button>
         </Box>
+        <ListSelect />
         <AddItem />
         <ItemsList />
       </Box>

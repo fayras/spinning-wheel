@@ -7,7 +7,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { addItem } from "../state/wheel";
+import { addItem } from "../state/lists";
 
 export const AddItem = () => {
   const [internalValue, setInternalValue] = useState("");
@@ -20,7 +20,7 @@ export const AddItem = () => {
   const iconColor = useColorModeValue("gray.800", "gray.50");
 
   return (
-    <InputGroup>
+    <InputGroup zIndex="0">
       <InputLeftElement
         pointerEvents="none"
         color={iconColor}
