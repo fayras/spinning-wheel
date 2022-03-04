@@ -82,6 +82,15 @@ export const createList = (label: string): ListId => {
   return id;
 };
 
+export const removeList = (id: ListId) => {
+  const index = internal.all.findIndex((list) => list.id === id);
+
+  if (index > -1) {
+    internal.all.splice(index, 1);
+    internal.currentID = internal.all[0]?.id || null;
+  }
+};
+
 function createItem(label: string, color?: number): ListItem {
   const id = new Date().valueOf() + Math.random();
 
