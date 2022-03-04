@@ -34,6 +34,7 @@ subscribe(internal, () => {
 
 export const state = derive({
   all: (get) => get(internal).all,
+  hasLists: (get) => get(internal).all.length > 0,
   currentList: (get): List => {
     const list = get(internal).all.find(
       (l) => get(internal).currentID === l.id
