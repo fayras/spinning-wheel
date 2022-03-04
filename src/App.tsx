@@ -1,14 +1,14 @@
-import { Flex, Box, Center, useColorModeValue } from "@chakra-ui/react";
+import { Flex, Box, Center, Button, useColorModeValue } from "@chakra-ui/react";
 import { useSnapshot } from "valtio";
-import { state } from "@/state/lists";
+import { showCreate, state } from "@/state/lists";
 import { AddItem } from "./components/AddItem";
 import { Canvas } from "./components/Canvas";
 import { ItemsList } from "./components/ItemsList";
 import { ListSelect } from "./components/ListSelect";
 import { SpinButton } from "./components/SpinButton";
 import { TopBar } from "./components/TopBar";
-import { CreateInitialList } from "./components/CreateInitialList";
 import { Waiting } from "./icons/Wating";
+import { CreateList } from "./components/CreateList";
 
 export const App = () => {
   const bg = useColorModeValue("gray.50", "gray.800");
@@ -17,9 +17,10 @@ export const App = () => {
   return (
     <Flex backgroundColor={bg} minHeight="100vh" flexDirection="column">
       <TopBar />
+      <CreateList />
       <Flex flexDirection="row">
         <Center flexDirection="column">
-          {lists.hasLists ? (
+          {lists.currentItems.length > 0 ? (
             <>
               <SpinButton />
               <Canvas height={600} width={600} />
@@ -45,7 +46,9 @@ export const App = () => {
               <ItemsList />
             </>
           ) : (
-            <CreateInitialList />
+            <Button onClick={() => showCreate(true)}>
+              Create your first list by clicking here ✨
+            </Button>
           )}
         </Box>
       </Flex>

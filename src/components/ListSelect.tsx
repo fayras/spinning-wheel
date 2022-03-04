@@ -9,7 +9,7 @@ import {
   Flex,
 } from "@chakra-ui/react";
 import { useSnapshot } from "valtio";
-import { state, setCurrent } from "@/state/lists";
+import { state, setCurrent, showCreate } from "@/state/lists";
 
 export const ListSelect = () => {
   const list = useSnapshot(state);
@@ -18,7 +18,7 @@ export const ListSelect = () => {
     <Flex alignItems="center" justifyContent="space-between">
       <Menu>
         <MenuButton my="10" px="2" as={Heading} size="md" cursor="pointer">
-          ▾ {list.currentList.label}
+          ▾ {list.currentList?.label}
         </MenuButton>
         <MenuList>
           {list.all.map((l) => (
@@ -36,8 +36,12 @@ export const ListSelect = () => {
       <Menu>
         <MenuButton as={IconButton} aria-label="Options" icon={<EditIcon />} />
         <MenuList>
-          <MenuItem icon={<AddIcon />} command="⌘T">
-            New List
+          <MenuItem
+            icon={<AddIcon />}
+            command="⌘T"
+            onClick={() => showCreate(true)}
+          >
+            Create a new List
           </MenuItem>
           <MenuItem icon={<EditIcon />} command="⌘O">
             Edit Name

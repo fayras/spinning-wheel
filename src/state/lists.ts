@@ -19,20 +19,29 @@ type List = {
 };
 
 type State = {
-  currentID: ListId;
+  showCreate: boolean;
+  currentID: ListId | null;
   all: List[];
 };
 
-const initialState =
-  localStorage.getItem("lists") || `{ "currentID": null, "all": [] }`;
+const savedInitialState = JSON.parse(
+  localStorage.getItem("lists") || "null"
+) as State | null;
 
-const internal = proxy<State>(JSON.parse(initialState) as State);
+const internal = proxy<State>(
+  savedInitialState || {
+    showCreate: false,
+    currentID: null,
+    all: [],
+  }
+);
 
 subscribe(internal, () => {
   localStorage.setItem("lists", JSON.stringify(internal));
 });
 
 export const state = derive({
+  showCreate: (get) => get(internal).showCreate,
   all: (get) => get(internal).all,
   hasLists: (get) => get(internal).all.length > 0,
   currentList: (get): List => {
@@ -53,8 +62,24 @@ export const state = derive({
   },
 });
 
+export const showCreate = (flag: boolean) => {
+  internal.showCreate = flag;
+};
+
 export const setCurrent = (id: ListId) => {
   internal.currentID = id;
+};
+
+export const createList = (label: string): ListId => {
+  const id = new Date().valueOf() + Math.random();
+
+  internal.all.push({
+    id,
+    label,
+    items: [],
+  });
+
+  return id;
 };
 
 function createItem(label: string, color?: number): ListItem {
@@ -77,7 +102,7 @@ export const editItem = (id: number, values: Partial<Omit<ListItem, "id">>) => {
   const list = internal.all.find((l) => internal.currentID === l.id);
   const index = list?.items.findIndex((item) => item.id === id);
 
-  if (list && index && index > -1) {
+  if (list && index !== undefined && index > -1) {
     if (values.color !== undefined) list.items[index].color = values.color;
     if (values.label !== undefined) list.items[index].label = values.label;
     if (values.visible !== undefined)
@@ -89,7 +114,7 @@ export const removeItem = (id: number) => {
   const list = internal.all.find((l) => internal.currentID === l.id);
   const index = list?.items.findIndex((item) => item.id === id);
 
-  if (list && index && index > -1) {
+  if (list && index !== undefined && index > -1) {
     list.items.splice(index, 1);
   }
 };
