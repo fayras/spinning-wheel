@@ -9,6 +9,7 @@ import { SpinButton } from "./components/SpinButton";
 import { TopBar } from "./components/TopBar";
 import { Waiting } from "./icons/Wating";
 import { CreateList } from "./components/CreateList";
+import { EditList } from "./components/EditList";
 
 export const App = () => {
   const bg = useColorModeValue("gray.50", "gray.800");
@@ -18,6 +19,7 @@ export const App = () => {
     <Flex backgroundColor={bg} minHeight="100vh" flexDirection="column">
       <TopBar />
       <CreateList />
+      <EditList />
       <Flex flexDirection="row">
         <Center flexDirection="column">
           {lists.currentItems.length > 0 ? (

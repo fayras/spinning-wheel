@@ -20,6 +20,7 @@ type List = {
 
 type State = {
   showCreate: boolean;
+  showEdit: boolean;
   currentID: ListId | null;
   all: List[];
 };
@@ -30,6 +31,7 @@ const savedInitialState = JSON.parse(
 
 const internal = proxy<State>(
   savedInitialState || {
+    showEdit: false,
     showCreate: false,
     currentID: null,
     all: [],
@@ -42,6 +44,7 @@ subscribe(internal, () => {
 
 export const state = derive({
   showCreate: (get) => get(internal).showCreate,
+  showEdit: (get) => get(internal).showEdit,
   all: (get) => get(internal).all,
   hasLists: (get) => get(internal).all.length > 0,
   currentList: (get): List => {
@@ -66,6 +69,10 @@ export const showCreate = (flag: boolean) => {
   internal.showCreate = flag;
 };
 
+export const showEdit = (flag: boolean) => {
+  internal.showEdit = flag;
+};
+
 export const setCurrent = (id: ListId) => {
   internal.currentID = id;
 };
@@ -88,6 +95,14 @@ export const removeList = (id: ListId) => {
   if (index > -1) {
     internal.all.splice(index, 1);
     internal.currentID = internal.all[0]?.id || null;
+  }
+};
+
+export const renameList = (id: ListId, label: string) => {
+  const index = internal.all.findIndex((list) => list.id === id);
+
+  if (index > -1) {
+    internal.all[index].label = label;
   }
 };
 

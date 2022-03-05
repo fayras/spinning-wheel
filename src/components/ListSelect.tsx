@@ -9,7 +9,13 @@ import {
   Flex,
 } from "@chakra-ui/react";
 import { useSnapshot } from "valtio";
-import { state, setCurrent, showCreate, removeList } from "@/state/lists";
+import {
+  state,
+  setCurrent,
+  showCreate,
+  removeList,
+  showEdit,
+} from "@/state/lists";
 
 export const ListSelect = () => {
   const list = useSnapshot(state);
@@ -39,7 +45,9 @@ export const ListSelect = () => {
           <MenuItem icon={<AddIcon />} onClick={() => showCreate(true)}>
             Create a new List
           </MenuItem>
-          <MenuItem icon={<EditIcon />}>Edit Name</MenuItem>
+          <MenuItem icon={<EditIcon />} onClick={() => showEdit(true)}>
+            Edit Name
+          </MenuItem>
           <MenuItem
             icon={<DeleteIcon />}
             onClick={() => {
