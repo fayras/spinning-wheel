@@ -1,3 +1,5 @@
+import { Moon } from "@/icons/Moon";
+import { Sun } from "@/icons/Sun";
 import {
   Switch,
   Flex,
@@ -24,7 +26,11 @@ export const TopBar = () => {
         <Heading size="md">Lucky Wheel</Heading>
       </Box>
       <Spacer />
-      <Switch p="4" onChange={() => toggleColorMode()} />
+      <Box p="4">
+        <Sun opacity={0.5} />
+        <Switch p="1" onChange={() => toggleColorMode()} />
+        <Moon opacity={0.5} />
+      </Box>
     </Flex>
   );
 };

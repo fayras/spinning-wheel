@@ -22,17 +22,15 @@ export const Wheel = ({ x, y, radius }: Props) => {
   const mStateWheel = useSnapshot(stateWheel);
   const mStateLists = useSnapshot(stateLists);
 
-  const items = useMemo(
-    () => mStateLists.currentItems.filter((item) => item.visible),
-    [mStateLists.currentItems]
-  );
-
   useEffect(() => {
-    const angle = (Math.PI * 2) / items.length;
-    const index = mod(Math.floor(-rotation / angle), items.length);
+    const angle = (Math.PI * 2) / mStateLists.currentVisibleItems.length;
+    const index = mod(
+      Math.floor(-rotation / angle),
+      mStateLists.currentVisibleItems.length
+    );
 
-    stateWheel.activeItem = items[index]?.id || null;
-  }, [rotation, items]);
+    stateWheel.activeItem = mStateLists.currentVisibleItems[index]?.id || null;
+  }, [rotation, mStateLists.currentVisibleItems]);
 
   useEffect(() => {
     void sound.play("clack");
@@ -54,8 +52,8 @@ export const Wheel = ({ x, y, radius }: Props) => {
 
   return (
     <Container x={x} y={y} pivot={{ x, y }} rotation={rotation}>
-      {items.map((item, index) => {
-        const angle = (Math.PI * 2) / items.length;
+      {mStateLists.currentVisibleItems.map((item, index) => {
+        const angle = (Math.PI * 2) / mStateLists.currentVisibleItems.length;
 
         return (
           <Arc
