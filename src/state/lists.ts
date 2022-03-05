@@ -63,6 +63,14 @@ export const state = derive({
     // Liste sollte nie null sein, aber für Typescript
     return list?.items || [];
   },
+  currentVisibleItems: (get) => {
+    const list = get(internal).all.find(
+      (l) => get(internal).currentID === l.id
+    );
+
+    // Liste sollte nie null sein, aber für Typescript
+    return list?.items?.filter((i) => i.visible) || [];
+  },
 });
 
 export const showCreate = (flag: boolean) => {
