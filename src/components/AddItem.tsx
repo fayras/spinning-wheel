@@ -7,7 +7,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { addItem } from "../state/lists";
+import { addItem } from "@/state/lists";
 
 export const AddItem = () => {
   const [internalValue, setInternalValue] = useState("");
