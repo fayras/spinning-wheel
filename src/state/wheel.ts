@@ -11,5 +11,5 @@ export const state = proxy<State>({
 });
 
 export const spin = (speed = 3) => {
-  state.rotationSpeed = speed;
+  state.rotationSpeed = speed + Math.random() * speed;
 };
