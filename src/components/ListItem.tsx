@@ -1,3 +1,4 @@
+import { useMemo, useState } from "react";
 import {
   ListItem as ChakraListItem,
   ListItemProps,
@@ -19,15 +20,26 @@ import {
 } from "@/state/lists";
 
 import { hex2string, string2hex } from "@/utils/colors";
+import { debounce } from "@/utils/helperFns";
 import { ColorPicker } from "./ColorPicker";
 
 const MotionListItem = motion<ListItemProps>(ChakraListItem);
 const MotionBox = motion<BoxProps>(Box);
 
 export const ListItem = ({ item }: { item: ListItemType }) => {
+  const [value, setValue] = useState(item.label);
   const bg = useColorModeValue(theme.colors.white, theme.colors.gray["900"]);
   const iconColor = useColorModeValue("blackAlpha", "gray");
   const color = hex2string(item.color);
+
+  const handleEdit = useMemo(
+    () =>
+      debounce(
+        (id: number, inputValue: string) => editItem(id, { label: inputValue }),
+        500
+      ),
+    []
+  );
 
   const cardVariants = {
     hover: {
@@ -88,9 +100,10 @@ export const ListItem = ({ item }: { item: ListItemType }) => {
             <Input
               variant="unstyled"
               textDecoration={item.visible ? "none" : "line-through"}
-              value={item.label}
+              value={value}
               onChange={(event) => {
-                editItem(item.id, { label: event.target.value });
+                setValue(event.target.value);
+                handleEdit(item.id, event.target.value);
               }}
             />
           </Box>
