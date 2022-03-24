@@ -96,8 +96,11 @@ export const ListItem = ({ item }: { item: ListItemType }) => {
               }}
             />
           </Box>
-          <Box>
+          <Box flexGrow={10}>
             <Input
+              textOverflow="ellipsis"
+              whiteSpace="nowrap"
+              overflow="hidden"
               variant="unstyled"
               textDecoration={item.visible ? "none" : "line-through"}
               value={value}
