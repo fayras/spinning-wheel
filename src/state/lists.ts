@@ -5,14 +5,14 @@ import { getRandomColor, string2hex } from "@/utils/colors";
 type ListId = number;
 type ListItemId = number;
 
-type ListItem = {
+export type ListItem = {
   id: ListItemId;
   label: string;
   color: number;
   visible: boolean;
 };
 
-type List = {
+export type List = {
   id: ListId;
   label: string;
   items: ListItem[];
