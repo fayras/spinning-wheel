@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Container } from "react-pixi-fiber/index";
-import { sound } from "@pixi/sound";
+import { type Sound, sound} from "@pixi/sound";
 import { state as stateWheel } from "@/state/wheel";
 import { state as stateLists } from "@/state/lists";
 import { useSnapshot } from "valtio";
@@ -13,7 +13,14 @@ type Props = {
   radius: number;
 };
 
-sound.add("clack", clack);
+let clackSound: Sound | undefined;
+sound.add("clack", {
+  url: clack,
+  preload: true,
+  loaded(err, s) {
+    clackSound = s;
+  }
+});
 
 const mod = (m: number, n: number) => ((m % n) + n) % n;
 
@@ -32,7 +39,7 @@ export const Wheel = ({ x, y, radius }: Props) => {
   }, [mStateWheel.rotation, mStateLists.currentVisibleItems]);
 
   useEffect(() => {
-    void sound.play("clack");
+    void clackSound?.play()
   }, [mStateWheel.activeItem]);
 
   return (
