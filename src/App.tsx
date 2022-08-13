@@ -18,11 +18,11 @@ export const App = () => {
       <TopBar />
       <CreateList />
       <EditList />
-      <Flex flexDirection="row">
+      <Flex flexDirection="row" justifyContent="center">
         <Center flexDirection="column">
           <CanvasContainer />
         </Center>
-        <Box p="10" flex="1" maxW={500}>
+        <Box p="10" flex="1" minW={350} maxW={500}>
           {lists.hasLists ? (
             <>
               <ListSelect />

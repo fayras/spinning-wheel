@@ -12,7 +12,7 @@ import {
 
 export const TopBar = () => {
   const bg = useColorModeValue("white", "gray.900");
-  const { toggleColorMode } = useColorMode();
+  const { toggleColorMode, colorMode } = useColorMode();
 
   return (
     <Flex
@@ -28,7 +28,11 @@ export const TopBar = () => {
       <Spacer />
       <Box p="4">
         <Sun opacity={0.5} />
-        <Switch p="1" onChange={() => toggleColorMode()} />
+        <Switch
+          isChecked={colorMode === "dark"}
+          p="1"
+          onChange={() => toggleColorMode()}
+        />
         <Moon opacity={0.5} />
       </Box>
     </Flex>

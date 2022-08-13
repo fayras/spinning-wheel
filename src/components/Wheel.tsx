@@ -1,5 +1,5 @@
-import { useState, useCallback, useEffect, useMemo } from "react";
-import { Container, usePixiTicker } from "react-pixi-fiber/index";
+import { useEffect } from "react";
+import { Container } from "react-pixi-fiber/index";
 import { sound } from "@pixi/sound";
 import { state as stateWheel } from "@/state/wheel";
 import { state as stateLists } from "@/state/lists";
@@ -18,40 +18,25 @@ sound.add("clack", clack);
 const mod = (m: number, n: number) => ((m % n) + n) % n;
 
 export const Wheel = ({ x, y, radius }: Props) => {
-  const [rotation, setRotation] = useState(0.05);
   const mStateWheel = useSnapshot(stateWheel);
   const mStateLists = useSnapshot(stateLists);
 
   useEffect(() => {
     const angle = (Math.PI * 2) / mStateLists.currentVisibleItems.length;
     const index = mod(
-      Math.floor(-rotation / angle),
+      Math.floor(-mStateWheel.rotation / angle),
       mStateLists.currentVisibleItems.length
     );
 
     stateWheel.activeItem = mStateLists.currentVisibleItems[index]?.id || null;
-  }, [rotation, mStateLists.currentVisibleItems]);
+  }, [mStateWheel.rotation, mStateLists.currentVisibleItems]);
 
   useEffect(() => {
     void sound.play("clack");
   }, [mStateWheel.activeItem]);
 
-  const animate = useCallback(
-    (delta) => {
-      stateWheel.rotationSpeed *= 0.98;
-      if (mStateWheel.rotationSpeed < 0.001) {
-        stateWheel.rotationSpeed = 0;
-      }
-
-      setRotation((r) => r + mStateWheel.rotationSpeed * delta);
-    },
-    [mStateWheel.rotationSpeed]
-  );
-
-  usePixiTicker(animate);
-
   return (
-    <Container x={x} y={y} pivot={{ x, y }} rotation={rotation}>
+    <Container x={x} y={y} pivot={{ x, y }} rotation={mStateWheel.rotation}>
       {mStateLists.currentVisibleItems.map((item, index) => {
         const angle = (Math.PI * 2) / mStateLists.currentVisibleItems.length;
 

@@ -10,8 +10,15 @@
     },
     "import/resolver": {
       "node": {
-        "paths": ["src"],
-        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+        "paths": [
+          "src"
+        ],
+        "extensions": [
+          ".js",
+          ".jsx",
+          ".ts",
+          ".tsx"
+        ]
       },
       "typescript": {
         // always try to resolve types under `<root>@types` directory even it doesn't contain any source code, like `@types/unist`
@@ -19,7 +26,12 @@
       }
     }
   },
-  "plugins": ["@typescript-eslint", "react", "jsx-a11y", "prettier"],
+  "plugins": [
+    "@typescript-eslint",
+    "react",
+    "jsx-a11y",
+    "prettier"
+  ],
   "env": {
     "browser": true,
     "node": true
@@ -35,13 +47,22 @@
     "plugin:jsx-a11y/recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
-    "plugin:prettier/recommended",
     "prettier"
   ],
   "rules": {
     "import/prefer-default-export": "off",
-    "react/function-component-definition": [2, { "namedComponents": "arrow-function" }],
-    "no-void": ["error", { "allowAsStatement": true }]
+    "react/function-component-definition": [
+      2,
+      {
+        "namedComponents": "arrow-function"
+      }
+    ],
+    "no-void": [
+      "error",
+      {
+        "allowAsStatement": true
+      }
+    ]
   },
   "ignorePatterns": [
     "*.config.ts",
@@ -49,6 +70,6 @@
     ".DS_Store",
     "dist",
     "dist-ssr",
-    "*.local",
-    "node_modules/*"]
+    "*.local"
+  ]
 }

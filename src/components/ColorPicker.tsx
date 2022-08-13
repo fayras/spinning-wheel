@@ -48,21 +48,19 @@ export const ColorPicker = ({ color, onSelect }: Props) => {
               spacing={2}
               templateColumns="repeat(5, 24px)"
             >
-              {availableColors.map((c) => {
-                return (
-                  <Box
-                    key={c}
-                    bg={c}
-                    w="6"
-                    h="6"
-                    cursor="pointer"
-                    onClick={() => {
-                      onSelect(c);
-                      setIsEditing.off();
-                    }}
-                  />
-                );
-              })}
+              {availableColors.map((c) => (
+                <Box
+                  key={c}
+                  bg={c}
+                  w="6"
+                  h="6"
+                  cursor="pointer"
+                  onClick={() => {
+                    onSelect(c);
+                    setIsEditing.off();
+                  }}
+                />
+              ))}
             </SimpleGrid>
           </PopoverBody>
         </PopoverContent>

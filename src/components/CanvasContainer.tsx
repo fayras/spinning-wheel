@@ -1,19 +1,22 @@
-import { Box } from "@chakra-ui/react";
+import { Box, useDimensions } from "@chakra-ui/react";
 import { useSnapshot } from "valtio";
 import { state } from "@/state/lists";
 import { Confused } from "@/icons/Confused";
 import { Waiting } from "@/icons/Wating";
+import { useRef } from "react";
 import { Canvas } from "./Canvas";
 import { SpinButton } from "./SpinButton";
 
 export const CanvasContainer = () => {
   const list = useSnapshot(state);
+  const ref = useRef<HTMLDivElement>(null);
+  const dims = useDimensions(ref, true);
 
   if (list.currentItems.length === 0) {
     return (
       <Box
-        height={600}
-        width={600}
+        height="100%"
+        width="100%"
         p="20"
         justifyContent="center"
         textAlign="center"
@@ -27,8 +30,8 @@ export const CanvasContainer = () => {
   if (list.currentVisibleItems.length === 0) {
     return (
       <Box
-        height={600}
-        width={600}
+        height="100%"
+        width="100%"
         p="20"
         justifyContent="center"
         textAlign="center"
@@ -42,9 +45,13 @@ export const CanvasContainer = () => {
   }
 
   return (
-    <>
+    <Box height="100%" width="100%" ref={ref}>
+      {dims ? dims.borderBox.width : 10}
       <SpinButton />
-      <Canvas height={600} width={600} />
-    </>
+      <Canvas
+        height={dims ? dims.borderBox.width : 10}
+        width={dims ? dims.borderBox.width : 10}
+      />
+    </Box>
   );
 };
