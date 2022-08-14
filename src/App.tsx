@@ -1,4 +1,4 @@
-import { Flex, Box, Center, Button, useColorModeValue } from "@chakra-ui/react";
+import { Flex, Box, Button, useColorModeValue } from "@chakra-ui/react";
 import { useSnapshot } from "valtio";
 import { showCreate, state } from "@/state/lists";
 import { AddItem } from "./components/AddItem";
@@ -18,11 +18,16 @@ export const App = () => {
       <TopBar />
       <CreateList />
       <EditList />
-      <Flex flexDirection="row" justifyContent="center">
-        <Center flexDirection="column">
+      <Flex flexDirection={["column", "column", "row"]} justifyContent="center">
+        <Box width={["100%", "100%", "500px", "700px"]}>
           <CanvasContainer />
-        </Center>
-        <Box p="10" flex="1" minW={350} maxW={500}>
+        </Box>
+        <Box
+          p="10"
+          flex="1"
+          minWidth={["100%", "100%", "300px"]}
+          maxW={"500px"}
+        >
           {lists.hasLists ? (
             <>
               <ListSelect />

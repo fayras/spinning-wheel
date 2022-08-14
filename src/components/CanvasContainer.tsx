@@ -1,4 +1,4 @@
-import { Box, useDimensions } from "@chakra-ui/react";
+import { Box, Flex, useDimensions } from "@chakra-ui/react";
 import { useSnapshot } from "valtio";
 import { state } from "@/state/lists";
 import { Confused } from "@/icons/Confused";
@@ -45,13 +45,16 @@ export const CanvasContainer = () => {
   }
 
   return (
-    <Box height="100%" width="100%" ref={ref}>
-      {dims ? dims.borderBox.width : 10}
+    <Flex
+      flexDirection={["column-reverse", "column-reverse", "column"]}
+      alignItems="center"
+      ref={ref}
+    >
       <SpinButton />
       <Canvas
         height={dims ? dims.borderBox.width : 10}
         width={dims ? dims.borderBox.width : 10}
       />
-    </Box>
+    </Flex>
   );
 };
